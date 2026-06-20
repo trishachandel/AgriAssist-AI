@@ -1,56 +1,116 @@
+import { useState } from "react";
+import axios from "axios";
+
 function App() {
+  const [message, setMessage] = useState("");
+  const [chat, setChat] = useState([]);
+
+  const sendMessage = async () => {
+    if (!message.trim()) return;
+
+    const userMessage = message;
+
+    setChat((prev) => [
+      ...prev,
+      { sender: "user", text: userMessage }
+    ]);
+
+    setMessage("");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/chat",
+        {
+          message: userMessage,
+        }
+      );
+
+      setChat((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: response.data.reply,
+        },
+      ]);
+    } catch (error) {
+      setChat((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Error getting response",
+        },
+      ]);
+    }
+  };
+
   return (
-    <div style={{
-      maxWidth: "800px",
-      margin: "50px auto",
-      padding: "20px",
-      fontFamily: "Arial"
-    }}>
-      <h1
-  style={{
-    textAlign: "center",
-    fontSize: "2.5rem",
-    marginBottom: "20px",
-  }}
->
-  🌾 Agri-Allied Crop Advisory Chatbot 🌾
-</h1>
+    <div
+      style={{
+        maxWidth: "900px",
+        margin: "20px auto",
+        padding: "20px",
+        fontFamily: "Arial",
+      }}
+    >
+      <h1 style={{ textAlign: "center" }}>
+        🌾 Agri-Allied Crop Advisory Chatbot
+      </h1>
 
       <div
         style={{
-          border: "1px solid #ccc",
-          height: "400px",
-          padding: "15px",
-          marginTop: "20px",
+          border: "1px solid gray",
+          height: "450px",
           overflowY: "auto",
-          borderRadius: "10px"
+          padding: "15px",
+          borderRadius: "10px",
         }}
       >
-        <p><strong>Bot:</strong> Welcome! Ask me about crop diseases, pests, or farming practices.</p>
+        {chat.map((msg, index) => (
+          <div key={index}>
+            <p>
+              <strong>
+                {msg.sender === "user" ? "You" : "Bot"}:
+              </strong>{" "}
+              {msg.text}
+            </p>
+          </div>
+        ))}
       </div>
 
-      <div style={{ marginTop: "20px" }}>
+      <div
+        style={{
+          marginTop: "20px",
+          display: "flex",
+          gap: "10px",
+        }}
+      >
         <input
           type="text"
-          placeholder="Type your agricultural query..."
+          value={message}
+          onChange={(e) =>
+            setMessage(e.target.value)
+          }
+          placeholder="Ask about crops, pests or diseases..."
           style={{
-            width: "80%",
-            padding: "10px"
+            flex: 1,
+            padding: "10px",
           }}
         />
 
-        <button
-          style={{
-            padding: "10px 20px",
-            marginLeft: "10px"
-          }}
-        >
+        <button onClick={sendMessage}>
           Send
         </button>
       </div>
 
-      <p style={{ marginTop: "20px", color: "red" }}>
-        Disclaimer: AI-generated advice should be verified with a licensed agricultural extension officer.
+      <p
+        style={{
+          color: "red",
+          marginTop: "20px",
+        }}
+      >
+        Disclaimer: AI-generated advice should be
+        verified with a licensed agricultural
+        extension officer.
       </p>
     </div>
   );

@@ -1,35 +1,47 @@
-# Agri-Allied AI-Powered Crop Advisory Chatbot
+# AI-Powered Crop Advisory Chatbot
 
-An AI-powered chatbot that provides crop advisory guidance for Uttarakhand's mountain farming regions.
+## Problem Statement
+
+Field supervisors often need quick guidance on crop diseases, pest management, irrigation, and post-harvest handling. This chatbot provides AI-powered agricultural advisory support for Uttarakhand mountain crops.
+
+## Features
+
+- AI-powered crop advisory
+- Gemini API integration
+- Agriculture-focused responses
+- Chat-based interface
+- Responsible AI disclaimer
 
 ## Tech Stack
 
 ### Frontend
-- React.js
-- Tailwind CSS
+- React
+- Vite
+- Axios
 
 ### Backend
 - Node.js
 - Express.js
+- Gemini API
 
-### Database
-- MongoDB Atlas
+## Project Structure
 
-### AI Integration
-- Google Gemini API
-
-## Features
-
-- Crop disease advisory
-- Pest management guidance
-- Post-harvest recommendations
-- Agricultural query chatbot
-- Uttarakhand-specific crop assistance
+frontend/
+backend/
+docs/
 
 ## Setup
 
-Coming Soon
+### Frontend
 
-## Project Status
+npm install
+npm run dev
 
-Initial project setup completed.
+### Backend
+
+npm install
+node server.js
+
+## Disclaimer
+
+AI-generated advice should be verified with a licensed agricultural extension officer.
