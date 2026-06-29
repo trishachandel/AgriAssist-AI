@@ -6,12 +6,11 @@ function About() {
     <>
       <Navbar />
 
-      <main style={{padding:"30px"}}>
+      <main style={{ padding: "30px" }}>
         <h1>About</h1>
 
         <p>
-          This project provides AI-powered
-          crop advisory support.
+          This project provides AI-powered crop advisory support for farmers.
         </p>
       </main>
 

@@ -12,10 +12,10 @@ function Home() {
 
       <div
         style={{
-          display:"grid",
-          gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",
-          gap:"20px",
-          padding:"20px"
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
+          gap: "20px",
+          padding: "20px",
         }}
       >
         <Card

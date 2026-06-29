@@ -6,12 +6,10 @@ function Login() {
     <>
       <Navbar />
 
-      <main style={{padding:"30px"}}>
+      <main style={{ padding: "30px" }}>
         <h1>Login</h1>
 
-        <p>
-          Placeholder login page.
-        </p>
+        <p>Login page placeholder.</p>
       </main>
 
       <Footer />
