@@ -28,7 +28,7 @@ function Navbar() {
         color: "white",
       }}
     >
-      <h2>🌾 Crop Advisor</h2>
+      <h2>🌱 AgriAssist AI</h2>
 
       <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
         <Link style={{ color: "white" }} to="/">Home</Link>

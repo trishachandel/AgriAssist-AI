@@ -1,4 +1,5 @@
-# AI-Powered Crop Advisory Chatbot
+# AgriAssist AI – Intelligent Crop Advisory Chatbot
+AgriAssist AI is a full-stack AI-powered crop advisory platform that helps farmers by providing crop recommendations, disease diagnosis support, irrigation guidance, and intelligent farming assistance using Google Gemini AI.
 
 ## Problem Statement
 

@@ -6,7 +6,11 @@ function Hero() {
         padding: "50px"
       }}
     >
-      <h1>AI Powered Crop Advisory Chatbot</h1>
+      <h1>AgriAssist AI</h1>
+
+<p>
+Smart AI-powered crop advisory platform for farmers.
+</p>
 
       <p>
         Helping farmers with crop disease,
