@@ -1,57 +1,104 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
-
-import {
-  Button,
-  Input,
-  Modal,
-  Toast,
-  Loader,
-} from "../components/ui";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+import {
+  Button,
+  Input,
+  Loader,
+  Modal,
+} from "../components/ui";
+
 function ComponentsDemo() {
-  const [text, setText] = useState("");
+
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>UI Components Demo</h1>
+    <>
+      <Navbar />
 
-      {/* Toast Container */}
-      <Toast />
+      <section className="mx-auto max-w-5xl px-6 py-16">
 
-      <h2>1. Button</h2>
-      <Button onClick={() => toast.success("Button clicked!")}>
-        Primary Button
-      </Button>
+        <h1 className="mb-10 text-4xl font-bold text-green-700">
+          Component Library
+        </h1>
 
-      <h2>2. Input</h2>
-      <Input
-        label="Your Name"
-        placeholder="Enter your name"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
+        <div className="space-y-10">
 
-      <h2>3. Modal</h2>
-      <Button onClick={() => setOpen(true)}>
-        Open Modal
-      </Button>
+          <div>
 
-      <Modal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        title="Demo Modal"
-      >
-        <p>This is a sample modal window.</p>
-      </Modal>
+            <h2 className="mb-4 text-2xl font-semibold">
+              Buttons
+            </h2>
 
-      <h2>4. Loader</h2>
-      <Loader />
-    </div>
+            <div className="flex gap-4">
+
+              <Button variant="primary">
+                Primary
+              </Button>
+
+              <Button variant="secondary">
+                Secondary
+              </Button>
+
+              <Button variant="outline">
+                Outline
+              </Button>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <h2 className="mb-4 text-2xl font-semibold">
+              Input
+            </h2>
+
+            <Input
+              label="Crop Name"
+              placeholder="Enter crop..."
+            />
+
+          </div>
+
+          <div>
+
+            <h2 className="mb-4 text-2xl font-semibold">
+              Loader
+            </h2>
+
+            <Loader />
+
+          </div>
+
+          <div>
+
+            <Button
+              onClick={() => setOpen(true)}
+            >
+              Open Modal
+            </Button>
+
+          </div>
+
+        </div>
+
+        <Modal
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          title="AgriAssist AI"
+        >
+          <p>
+            This modal is part of the reusable UI component library.
+          </p>
+        </Modal>
+
+      </section>
+
+      <Footer />
+    </>
   );
 }
 

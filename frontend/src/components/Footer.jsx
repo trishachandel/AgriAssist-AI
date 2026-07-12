@@ -1,15 +1,23 @@
 function Footer() {
   return (
-    <footer
-      style={{
-        textAlign: "center",
-        padding: "20px",
-        marginTop: "50px",
-        background: "#2d6a4f",
-        color: "white"
-      }}
-    >
-      © 2026 AI Crop Advisory Chatbot
+    <footer className="bg-gray-900 text-gray-300 mt-16">
+
+      <div className="mx-auto max-w-7xl px-6 py-10 text-center">
+
+        <h2 className="text-2xl font-bold text-white">
+          🌱 AgriAssist AI
+        </h2>
+
+        <p className="mt-3">
+          Intelligent Crop Advisory Platform powered by Artificial Intelligence.
+        </p>
+
+        <p className="mt-6 text-sm">
+          © 2026 AgriAssist AI. All Rights Reserved.
+        </p>
+
+      </div>
+
     </footer>
   );
 }

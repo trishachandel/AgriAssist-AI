@@ -5,17 +5,17 @@ const router = express.Router();
 const {
   getAllCrops,
   getCropById,
+  searchCrops,
   addCrop,
   updateCrop,
   deleteCrop,
-  searchCrop,
 } = require("../controllers/cropController");
+
+// Search crops
+router.get("/search", searchCrops);
 
 // Get all crops
 router.get("/", getAllCrops);
-
-// Search crops by name
-router.get("/search", searchCrop);
 
 // Get crop by ID
 router.get("/:id", getCropById);
@@ -23,10 +23,10 @@ router.get("/:id", getCropById);
 // Add a new crop
 router.post("/", addCrop);
 
-// Update crop
+// Update a crop
 router.put("/:id", updateCrop);
 
-// Delete crop
+// Delete a crop
 router.delete("/:id", deleteCrop);
 
 module.exports = router;

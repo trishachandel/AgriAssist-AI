@@ -9,8 +9,8 @@ const chatWithAI = async (req, res) => {
     const { message } = req.body;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-    });
+  model: "gemini-2.5-flash",
+});
 
     const prompt = `
 You are an agricultural advisor specializing in Uttarakhand mountain crops.
@@ -38,12 +38,12 @@ Always end with:
       reply: response,
     });
   } catch (error) {
-    console.error(error);
+  console.error("Gemini Error:", error);
 
-    res.status(500).json({
-      reply: "Error generating response",
-    });
-  }
+  res.status(500).json({
+    reply: error.message || "Error generating response",
+  });
+}
 };
 
 module.exports = {

@@ -1,56 +1,57 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 function Navbar() {
-  const [dark, setDark] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
 
-  useEffect(() => {
-    if (dark) {
-      document.body.className = "dark";
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.className = "light";
-      localStorage.setItem("theme", "light");
-    }
-  }, [dark]);
+  const { darkMode, setDarkMode } =
+    useContext(ThemeContext);
 
   return (
-    <nav
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexWrap: "wrap",
-        padding: "15px",
-        background: "#2d6a4f",
-        color: "white",
-      }}
-    >
-      <h2>🌱 AgriAssist AI</h2>
 
-      <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-        <Link style={{ color: "white" }} to="/">Home</Link>
-        <Link style={{ color: "white" }} to="/about">About</Link>
-        <Link style={{ color: "white" }} to="/dashboard">Dashboard</Link>
-        <Link style={{ color: "white" }} to="/login">Login</Link>
-        <Link style={{ color: "white" }} to="/components">Components</Link>
+    <nav className="bg-green-700 text-white shadow">
 
-        <button
-          onClick={() => setDark(!dark)}
-          style={{
-            padding: "8px 12px",
-            cursor: "pointer",
-            borderRadius: "5px",
-            border: "none",
-          }}
-        >
-          {dark ? "☀️ Light" : "🌙 Dark"}
-        </button>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+        <h1 className="text-2xl font-bold">
+          🌱 AgriAssist AI
+        </h1>
+
+        <div className="flex items-center gap-6">
+
+          <Link to="/">Home</Link>
+
+          <Link to="/about">About</Link>
+
+          <Link to="/dashboard">
+            Dashboard
+          </Link>
+
+          <Link to="/login">
+            Login
+          </Link>
+
+          <Link to="/components">
+            Components
+          </Link>
+
+          <button
+            className="rounded bg-white px-3 py-1 text-green-700"
+            onClick={() =>
+              setDarkMode(!darkMode)
+            }
+          >
+            {darkMode ? "☀️" : "🌙"}
+          </button>
+
+        </div>
+
       </div>
+
     </nav>
+
   );
+
 }
 
 export default Navbar;
