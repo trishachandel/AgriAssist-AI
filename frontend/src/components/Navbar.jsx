@@ -1,14 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 function Navbar() {
-
   const { darkMode, setDarkMode } =
     useContext(ThemeContext);
 
-  return (
+  const navigate = useNavigate();
 
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    navigate("/login");
+  };
+
+  return (
     <nav className="bg-green-700 text-white shadow">
 
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -23,17 +36,40 @@ function Navbar() {
 
           <Link to="/about">About</Link>
 
-          <Link to="/dashboard">
-            Dashboard
-          </Link>
-
-          <Link to="/login">
-            Login
-          </Link>
-
           <Link to="/components">
             Components
           </Link>
+
+          {token && (
+            <Link to="/dashboard">
+              Dashboard
+            </Link>
+          )}
+
+          {!token ? (
+            <>
+              <Link to="/login">
+                Login
+              </Link>
+
+              <Link to="/register">
+                Register
+              </Link>
+            </>
+          ) : (
+            <>
+              <span className="font-semibold">
+                👋 {user?.name}
+              </span>
+
+              <button
+                onClick={handleLogout}
+                className="rounded bg-red-600 px-3 py-1 hover:bg-red-700"
+              >
+                Logout
+              </button>
+            </>
+          )}
 
           <button
             className="rounded bg-white px-3 py-1 text-green-700"
@@ -49,9 +85,7 @@ function Navbar() {
       </div>
 
     </nav>
-
   );
-
 }
 
 export default Navbar;

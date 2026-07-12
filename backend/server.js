@@ -6,7 +6,7 @@ const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 const chatRoute = require("./routes/chatRoute");
 const cropRoutes = require("./routes/cropRoute");
-
+const authRoute = require("./routes/authRoute");
 const app = express();
 
 app.use(cors());
@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use("/api/chat", chatRoute);
 app.use("/api/crops", cropRoutes);
-
+app.use("/api/auth", authRoute);
 app.get("/", (req, res) => {
   res.send("Backend Running");
 });

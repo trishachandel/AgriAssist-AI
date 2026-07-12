@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-
-import { searchCrops } from "../services/cropService";
+import {
+  getAllCrops,
+  searchCrops,
+} from "../services/cropService";
+import { askAI } from "../services/chatService";
 
 import DashboardLayout from "../layout/DashboardLayout";
 
@@ -49,11 +51,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/crops"
-        );
-
-        const crops = response.data;
+        const crops = await getAllCrops();
 
         setCropList(crops);
 
@@ -72,14 +70,14 @@ function Dashboard() {
           queries: 0,
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     fetchStats();
   }, []);
 
-  // Live search
+  // Live Search
   useEffect(() => {
     const delay = setTimeout(async () => {
       if (!search.trim()) {
@@ -91,43 +89,39 @@ function Dashboard() {
         const data = await searchCrops(search);
         setSearchResults(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }, 400);
 
     return () => clearTimeout(delay);
   }, [search]);
 
-  // Send AI message
+  // AI Chat
   const sendMessage = async () => {
     const text = input.trim();
 
     if (!text) return;
 
-    const userMessage = {
-      sender: "user",
-      message: text,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        sender: "user",
+        message: text,
+      },
+    ]);
 
     setInput("");
 
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/chat",
-        {
-          message: text,
-        }
-      );
+      const response = await askAI(text);
 
       setMessages((prev) => [
         ...prev,
         {
           sender: "ai",
-          message: response.data.reply,
+          message: response.reply,
         },
       ]);
 
@@ -155,7 +149,6 @@ function Dashboard() {
     <DashboardLayout>
       <WelcomeBanner />
 
-      {/* Statistics */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Available Crops"
@@ -178,7 +171,6 @@ function Dashboard() {
         />
       </div>
 
-      {/* Search */}
       <div className="mt-8">
         <SearchBar
           value={search}
@@ -198,20 +190,34 @@ function Dashboard() {
               <div className="grid gap-4 md:grid-cols-2">
                 {searchResults.map((crop) => (
                   <div
-                    key={crop.id}
+                    key={crop._id || crop.id}
                     className="rounded-lg border p-4"
                   >
                     <h4 className="font-bold">
-                      {crop.name}
+                      🌾 {crop.name}
                     </h4>
 
-                    <p>Disease: {crop.disease}</p>
-
                     <p>
-                      Irrigation: {crop.irrigation}
+                      <strong>Disease:</strong>{" "}
+                      {crop.disease}
                     </p>
 
-                    <p>Season: {crop.season}</p>
+                    <p>
+                      <strong>Irrigation:</strong>{" "}
+                      {crop.irrigation}
+                    </p>
+
+                    <p>
+                      <strong>Season:</strong>{" "}
+                      {crop.season}
+                    </p>
+
+                    {crop.fertilizer && (
+                      <p>
+                        <strong>Fertilizer:</strong>{" "}
+                        {crop.fertilizer}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -220,14 +226,11 @@ function Dashboard() {
         )}
       </div>
 
-      {/* Weather + Recent Crops */}
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <WeatherWidget />
-
         <RecentCrops crops={cropList} />
       </div>
 
-      {/* AI Chat */}
       <div className="mt-10 rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800">
         <h2 className="mb-6 text-2xl font-bold text-green-700 dark:text-green-400">
           🤖 AI Crop Advisor
@@ -245,7 +248,6 @@ function Dashboard() {
           {loading && (
             <div className="mt-4 flex items-center gap-2 text-gray-500">
               <div className="h-3 w-3 animate-pulse rounded-full bg-green-600"></div>
-
               <p>AgriAssist AI is thinking...</p>
             </div>
           )}
@@ -259,7 +261,9 @@ function Dashboard() {
             placeholder="Ask anything about crops..."
             className="flex-1 rounded-lg border border-gray-300 p-3 outline-none focus:border-green-600"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) =>
+              setInput(e.target.value)
+            }
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 sendMessage();

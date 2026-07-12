@@ -3,6 +3,7 @@
  * label
  * placeholder
  * type
+ * name
  * value
  * onChange
  * error
@@ -12,13 +13,13 @@ function Input({
   label,
   placeholder,
   type = "text",
+  name,
   value,
   onChange,
   error,
 }) {
   return (
     <div className="mb-5">
-
       <label className="mb-2 block font-medium">
         {label}
       </label>
@@ -26,6 +27,7 @@ function Input({
       <input
         className="w-full rounded-lg border p-3 focus:border-green-700 focus:outline-none"
         type={type}
+        name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -36,7 +38,6 @@ function Input({
           {error}
         </p>
       )}
-
     </div>
   );
 }

@@ -1,7 +1,5 @@
 const express = require("express");
 
-const router = express.Router();
-
 const {
   getAllCrops,
   getCropById,
@@ -11,22 +9,22 @@ const {
   deleteCrop,
 } = require("../controllers/cropController");
 
-// Search crops
-router.get("/search", searchCrops);
+const authMiddleware = require("../middleware/authMiddleware");
 
-// Get all crops
+const router = express.Router();
+
+// Public Routes
 router.get("/", getAllCrops);
 
-// Get crop by ID
+router.get("/search", searchCrops);
+
 router.get("/:id", getCropById);
 
-// Add a new crop
-router.post("/", addCrop);
+// Protected Routes
+router.post("/", authMiddleware, addCrop);
 
-// Update a crop
-router.put("/:id", updateCrop);
+router.put("/:id", authMiddleware, updateCrop);
 
-// Delete a crop
-router.delete("/:id", deleteCrop);
+router.delete("/:id", authMiddleware, deleteCrop);
 
 module.exports = router;

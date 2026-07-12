@@ -1,25 +1,19 @@
-function WelcomeBanner(){
+function WelcomeBanner() {
+  const user = JSON.parse(localStorage.getItem("user"));
 
-return(
+  return (
+    <div className="mb-8 rounded-xl bg-green-700 p-6 text-white">
+      <h1 className="text-3xl font-bold">
+        👋 Welcome {user?.name || "Farmer"}!
+      </h1>
 
-<div className="mb-8 rounded-xl bg-green-700 p-8 text-white">
-
-<h1 className="text-4xl font-bold">
-
-Welcome to AgriAssist AI
-
-</h1>
-
-<p className="mt-3">
-
-Manage crops, receive AI guidance and monitor agricultural information from one dashboard.
-
-</p>
-
-</div>
-
-);
-
+      <p className="mt-2">
+        Get AI-powered crop recommendations,
+        disease detection, irrigation advice,
+        and fertilizer guidance.
+      </p>
+    </div>
+  );
 }
 
 export default WelcomeBanner;

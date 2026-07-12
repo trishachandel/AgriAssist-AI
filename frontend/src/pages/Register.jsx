@@ -6,12 +6,13 @@ import Footer from "../components/Footer";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 
-import { loginUser } from "../services/authService";
+import { registerUser } from "../services/authService";
 
-function Login() {
+function Register() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -31,16 +32,19 @@ function Login() {
     e.preventDefault();
 
     setError("");
+
     setLoading(true);
 
     try {
-      await loginUser(formData);
+      await registerUser(formData);
 
-      navigate("/dashboard");
+      alert("Registration Successful!");
+
+      navigate("/login");
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Login failed. Please try again."
+          "Registration failed."
       );
     }
 
@@ -52,13 +56,22 @@ function Login() {
       <Navbar />
 
       <section className="flex min-h-screen items-center justify-center bg-gray-100">
+
         <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
 
           <h1 className="mb-6 text-center text-3xl font-bold text-green-700">
-            Login
+            Register
           </h1>
 
           <form onSubmit={handleSubmit}>
+
+            <Input
+              label="Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+            />
 
             <Input
               label="Email"
@@ -79,7 +92,7 @@ function Login() {
             />
 
             {error && (
-              <p className="mb-4 text-sm text-red-600">
+              <p className="mb-4 text-red-600">
                 {error}
               </p>
             )}
@@ -90,27 +103,32 @@ function Login() {
               type="submit"
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? "Registering..." : "Register"}
             </Button>
-            <p className="mt-5 text-center">
-  Don't have an account?
-
-  <Link
-    to="/register"
-    className="ml-2 font-semibold text-green-700 hover:underline"
-  >
-    Register
-  </Link>
-</p>
 
           </form>
 
+          <p className="mt-5 text-center">
+
+            Already have an account?
+
+            <Link
+              to="/login"
+              className="ml-2 font-semibold text-green-700"
+            >
+              Login
+            </Link>
+
+          </p>
+
         </div>
+
       </section>
 
       <Footer />
+
     </>
   );
 }
 
-export default Login;
+export default Register;
