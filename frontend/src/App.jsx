@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
@@ -9,7 +9,6 @@ import CropDetails from "./pages/CropDetails";
 import Toast from "./components/ui/Toast";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./pages/Register";
-import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <BrowserRouter>
@@ -40,6 +39,10 @@ function App() {
           path="/crop/:id"
           element={<CropDetails />}
         />
+        <Route
+  path="*"
+  element={<NotFound />}
+/>
       </Routes>
     </BrowserRouter>
   );

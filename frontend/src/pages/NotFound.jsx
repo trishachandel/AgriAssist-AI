@@ -1,39 +1,30 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
 function NotFound() {
-
   return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
 
-    <>
-      <Navbar />
+      <h1 className="text-8xl font-bold text-green-700">
+        404
+      </h1>
 
-      <div className="flex min-h-screen flex-col items-center justify-center">
+      <h2 className="mt-4 text-3xl font-semibold">
+        Page Not Found
+      </h2>
 
-        <h1 className="text-7xl font-bold text-green-700">
-          404
-        </h1>
+      <p className="mt-3 text-gray-600">
+        The page you are looking for doesn't exist.
+      </p>
 
-        <p className="mt-4 text-xl">
-          Page Not Found
-        </p>
+      <Link
+        to="/"
+        className="mt-8 rounded-lg bg-green-700 px-6 py-3 font-semibold text-white hover:bg-green-800"
+      >
+        Back to Home
+      </Link>
 
-        <Link
-          to="/"
-          className="mt-6 rounded bg-green-700 px-6 py-3 text-white"
-        >
-          Go Home
-        </Link>
-
-      </div>
-
-      <Footer />
-
-    </>
-
+    </div>
   );
-
 }
 
 export default NotFound;
